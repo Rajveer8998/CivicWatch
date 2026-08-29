@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicWatch - Report an Issue</title>
+  <meta name="description" content="Submit a civic issue report to CivicWatch.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="content-page report-page">
+  <div class="app-container">
+    <header class="app-header">
+      <div class="brand-section"><div class="brand-logo-icon">⌖</div><div><div class="brand-title">CivicWatch <span class="pulse-badge">Live Map</span></div><div class="city-indicator">⌖ <span id="header-city-name">San Francisco Metro</span></div></div></div>
+      <nav class="view-tabs" aria-label="Main navigation">
+        <a class="tab-btn" href="index.html" data-view="map">🗺️ <span>Map View</span></a>
+        <a class="tab-btn" href="feed.html" data-view="feed">▦ <span>Issue Feed</span></a>
+        <a class="tab-btn" href="stats.html" data-view="stats">◔ <span>Stats</span></a>
+      </nav>
+      <div class="header-actions">
+        <div class="stats-pill"><span class="live-dot"></span><span id="header-active-count">8 Active Reports</span></div>
+        <button class="btn-icon" id="btn-theme-toggle" title="Toggle Dark / Light mode">◐</button>
+        <button class="btn-icon" id="btn-reset-demo" title="Clear submitted reports">↻</button>
+        <a class="dashboard-shortcut" href="dashboard.html" title="Open dashboard" aria-label="Open dashboard" style="display: inline-flex !important;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+
+        <button class="btn-icon" id="btn-notifications" title="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notification-badge" id="notification-count">3</span>
+        </button>
+        <a class="btn-primary active-page-link" href="report.html">＋ <span>Report Issue</span></a>
+      </div>
+    </header>
+
+    <main class="report-page-main">
+      <section class="report-page-card" aria-labelledby="report-page-title">
+        <div class="modal-header">
+          <div class="modal-title" id="report-page-title">ⓘ Report a Civic Issue</div>
+          <a class="btn-icon" href="feed.html" aria-label="Cancel report">✕</a>
+        </div>
+        <form id="form-report-issue" class="modal-body">
+          <div class="form-group">
+            <label class="form-label"><span>1. Select Issue Category *</span><span class="form-hint">Choose the best match</span></label>
+            <div class="category-picker-grid" id="modal-category-selector">
+              <div class="category-radio-card selected" data-cat="pothole"><span class="category-radio-icon">🚧</span><span class="category-radio-name">Pothole / Road</span></div>
+              <div class="category-radio-card" data-cat="garbage"><span class="category-radio-icon">🗑️</span><span class="category-radio-name">Garbage / Waste</span></div>
+              <div class="category-radio-card" data-cat="streetlight"><span class="category-radio-icon">💡</span><span class="category-radio-name">Streetlight</span></div>
+              <div class="category-radio-card" data-cat="water_leak"><span class="category-radio-icon">💧</span><span class="category-radio-name">Water Leak</span></div>
+              <div class="category-radio-card" data-cat="traffic_signal"><span class="category-radio-icon">🚦</span><span class="category-radio-name">Traffic Signal</span></div>
+              <div class="category-radio-card" data-cat="sidewalk"><span class="category-radio-icon">🚶</span><span class="category-radio-name">Sidewalk</span></div>
+              <div class="category-radio-card" data-cat="tree_hazard"><span class="category-radio-icon">🌳</span><span class="category-radio-name">Fallen Tree</span></div>
+              <div class="category-radio-card" data-cat="other"><span class="category-radio-icon">⚠️</span><span class="category-radio-name">Other Hazard</span></div>
+            </div>
+            <input type="hidden" id="report-input-category" value="pothole">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label"><span>2. Take a Photo *</span><span class="form-hint">Use your camera or pick an existing photo</span></label>
+            <div class="photo-dropzone" id="report-photo-dropzone">
+              <input type="file" id="report-file-input" accept="image/*" capture="environment" style="display:none">
+              <div style="font-size:2rem; color:var(--primary)">▣</div><div style="font-weight:600; font-size:.85rem">Tap to take a photo or upload one</div><div style="font-size:.75rem; color:var(--text-muted)">PNG, JPG, WebP up to 10MB</div>
+            </div>
+            <div class="photo-preview-container" id="photo-preview-box"><img id="photo-preview-element" class="photo-preview-img" src="" alt="Issue preview"><button type="button" class="btn-remove-photo" id="btn-remove-photo" title="Remove photo">✕</button></div>
+            <div style="margin-top:.35rem"><span style="font-size:.75rem; color:var(--text-muted)">Quick Sample Photos (Demo helper):</span><div class="sample-photos-row" id="sample-photos-container"></div></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label"><span>3. Location & GPS Coordinates *</span><span class="form-hint">Click mini-map or auto-detect GPS</span></label>
+            <div class="location-input-row"><input type="text" id="report-input-address" class="form-input" placeholder="e.g. 742 Market St or Landmark..." required><button type="button" class="btn-secondary" id="btn-report-detect-gps">⌖ <span>Detect GPS</span></button></div>
+            <div id="mini-picker-map" class="mini-map-picker"></div>
+            <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--text-muted);padding-top:.25rem"><span>Selected Lat: <strong id="val-picker-lat">37.7749</strong></span><span>Selected Lng: <strong id="val-picker-lng">-122.4194</strong></span></div>
+            <input type="hidden" id="report-input-lat" value="37.7749"><input type="hidden" id="report-input-lng" value="-122.4194">
+          </div>
+
+          <div class="form-group"><label class="form-label"><span>4. Urgency Level *</span><span class="form-hint">How dangerous is this hazard?</span></label><div class="severity-picker-group" id="severity-picker-group"><button type="button" class="severity-option-btn" data-severity="low">🟢 Low</button><button type="button" class="severity-option-btn selected-medium" data-severity="medium">🟡 Medium</button><button type="button" class="severity-option-btn" data-severity="high">🟠 High</button><button type="button" class="severity-option-btn" data-severity="critical">🔴 Critical</button></div><input type="hidden" id="report-input-severity" value="medium"></div>
+          <div class="form-group"><label class="form-label" for="report-input-title">5. Issue Title *</label><input type="text" id="report-input-title" class="form-input" placeholder="e.g. Deep pothole causing car tire damage" required></div>
+          <div class="form-group"><label class="form-label" for="report-input-desc">6. Detailed Description *</label><textarea id="report-input-desc" class="form-textarea" placeholder="Describe the size, exact hazard, how long it has been there, etc." required></textarea></div>
+          <div class="form-group" style="border-top:1px solid var(--border-color);padding-top:.75rem"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem"><label class="form-label" style="margin:0">Reporter Details</label><label style="font-size:.8rem;display:flex;align-items:center;gap:.35rem;cursor:pointer"><input type="checkbox" id="report-checkbox-anon"><span>Report Anonymously</span></label></div><input type="text" id="report-input-name" class="form-input" placeholder="Your name"></div>
+        </form>
+        <div class="modal-footer"><a class="btn-secondary" href="feed.html">Cancel</a><button type="submit" form="form-report-issue" class="btn-primary" id="btn-submit-report">✓ <span>Submit Civic Report</span></button></div>
+      </section>
+    </main>
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="auth.js"></script><script src="config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><script src="data.js"></script><script src="api.js"></script><script src="app.js"></script>
+</body>
+</html>
