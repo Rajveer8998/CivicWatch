@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicWatch - Sign in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-intro">
+      <a href="home.html" class="brand-section"><div class="brand-logo-icon">⌖</div><div><div class="brand-title">CivicWatch</div><div class="city-indicator">Your neighborhood, made better</div></div></a>
+      <div class="auth-intro-copy"><span class="auth-eyebrow">COMMUNITY IN ACTION</span><h1>See it.<br>Report it.<br><em>Improve it.</em></h1><p>Join your neighbors in making local issues visible, trackable, and easier to resolve.</p></div>
+      <div class="auth-trust-row"><span>✓ Quick to report</span><span>✓ Community powered</span></div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <span class="auth-eyebrow">CIVICWATCH ACCOUNT</span>
+        <h2 id="auth-title">Welcome back</h2>
+        <p id="auth-subtitle">Sign in to help improve your city.</p>
+        <form id="auth-form" class="auth-form">
+          <label id="auth-name-group" class="form-group" hidden><span class="form-label">Your name</span><input class="form-input" id="auth-name" type="text" placeholder="Alex Rivera"></label>
+          <label class="form-group"><span class="form-label">Email address</span><input class="form-input" id="auth-email" type="email" placeholder="you@example.com" required></label>
+          <label class="form-group"><span class="form-label">Password</span><input class="form-input" type="password" placeholder="Enter your password" required></label>
+          <button class="btn-primary auth-submit" id="auth-submit" type="submit">Sign in</button>
+        </form>
+        <button class="auth-toggle" id="auth-mode-toggle" type="button">New to CivicWatch? Create an account</button>
+        <p class="auth-note" id="auth-note" aria-live="polite">Use your CivicWatch account to continue.</p>
+      </div>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

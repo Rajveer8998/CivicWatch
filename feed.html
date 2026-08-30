@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicWatch - Issue Feed</title>
+  <meta name="description" content="Browse live community civic issue reports.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="content-page">
+  <div class="app-container">
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="brand-logo-icon">⌖</div>
+        <div>
+          <div class="brand-title">CivicWatch <span class="pulse-badge">Live Map</span></div>
+          <div class="city-indicator">⌖ <span id="header-city-name">San Francisco Metro</span></div>
+        </div>
+      </div>
+      <nav class="view-tabs" aria-label="Main navigation">
+        <a class="tab-btn" href="index.html" data-view="map">🗺️ <span>Map View</span></a>
+        <a class="tab-btn active" href="feed.html" data-view="feed">▦ <span>Issue Feed</span></a>
+        <a class="tab-btn" href="stats.html" data-view="stats">◔ <span>Stats</span></a>
+      </nav>
+      <div class="header-actions">
+        <div class="stats-pill" title="Live active community reports"><span class="live-dot"></span><span id="header-active-count">8 Active Reports</span></div>
+        <button class="btn-icon" id="btn-theme-toggle" title="Toggle Dark / Light mode">◐</button>
+        <button class="btn-icon" id="btn-reset-demo" title="Clear submitted reports">↻</button>
+        <a class="dashboard-shortcut" href="dashboard.html" title="Open dashboard" aria-label="Open dashboard" style="display: inline-flex !important;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
+
+        <button class="btn-icon" id="btn-notifications" title="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notification-badge" id="notification-count">3</span>
+        </button>
+        <a class="btn-primary" href="report.html">＋ <span>Report Issue</span></a>
+      </div>
+    </header>
+
+    <main class="main-viewport">
+      <section id="view-feed" class="view-section active">
+        <div class="feed-header-bar">
+          <div>
+            <h1 style="font-size: 1.5rem; font-weight: 800;">Citizen Civic Feed</h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Real-time reports, verified repairs, and community upvotes</p>
+          </div>
+          <div class="feed-controls-group">
+            <label for="feed-sort-select" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">Sort By:</label>
+            <select class="sort-select" id="feed-sort-select">
+              <option value="newest">Most Recent</option>
+              <option value="upvotes">Most Upvoted ("Me Too")</option>
+              <option value="severity">Critical / High Severity</option>
+            </select>
+          </div>
+        </div>
+        <div class="issues-grid" id="feed-cards-grid"></div>
+      </section>
+    </main>
+
+    <div class="modal-overlay" id="modal-detail-overlay">
+      <div class="modal-container detail-modal-container">
+        <div class="modal-header">
+          <div class="modal-title" id="detail-modal-title">Civic Issue Details</div>
+          <button class="btn-icon" id="btn-close-detail-modal" style="border:none;">✕</button>
+        </div>
+        <div class="modal-body" id="detail-modal-body"></div>
+        <div class="modal-footer" style="justify-content: space-between;">
+          <button class="btn-upvote" id="detail-btn-upvote" style="padding: 0.55rem 1.25rem; font-size: 0.9rem;">👍 <span id="detail-upvote-text">Upvote (+1 Me Too)</span> (<strong id="detail-upvote-count">0</strong>)</button>
+          <button type="button" class="btn-secondary" id="btn-close-detail-footer">Close</button>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+  <script src="auth.js"></script>
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="data.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
